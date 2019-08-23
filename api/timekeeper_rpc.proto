@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package timekeeper_rpc;
+
+service TimeKeeperRPC {
+  rpc Add(TimeStartRecord) returns (TimeRecord) {}
+  rpc Done(RecordID) returns (TimeRecord) {}
+  rpc GetGroupedForDate(GetForDate) returns (stream TimeGroupedRecord) {}
+}
+
+message TimeStartRecord {
+  string userID = 1;
+  string task = 2;
+  int64 timeStart = 3;
+  string comment = 4;
+}
+
+message TimeRecord {
+  string ID = 1;
+  string userID = 2;
+  string task = 3;
+  int64 timeStart = 4;
+  int64 timeEnd = 5;
+  string comment = 6;
+}
+
+message TimeGroupedRecord {
+  string userID = 1;
+  string task = 2;
+  int64 date = 3;
+  int64 spentMinutes = 4;
+  string comments = 5;
+}
+
+message GetForDate {
+  string userID = 1;
+  int64 date = 2;
+}
+
+message RecordID {
+  string userID = 1;
+  string ID = 2;
+}
